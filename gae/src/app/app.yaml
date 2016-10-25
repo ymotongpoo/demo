@@ -1,0 +1,21 @@
+application: ymotongpoo-com
+version: alpha-0
+runtime: go
+api_version: go1
+
+handlers:
+- url: /.well-known/acme-challenge/?(.{5}).*
+  static_files: _letsencrypt/\1.txt
+  upload: _letsencrypt/(.+)
+  mime_type: text/plain
+
+- url: /(.*\.html)$
+  static_files: static/\1
+  upload: static/.*\.html$
+
+- url: /(.*\.(gif|png|jpg))$
+  static_files: static/\1
+  upload: static/.*\.(gif|png|jpg)$
+
+- url: /.*
+  script: _go_app
